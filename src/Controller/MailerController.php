@@ -10,12 +10,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MailerController extends AbstractController
 {
-    #[Route('/email')]
+    #[Route('/email', name: 'app_mailer')]
     public function sendEmail(MailerInterface $mailer): Response
     {
         try {
             $email = (new Email())
-                ->from('enzo30@example.com')
+                ->from('enzo31@example.com')
                 ->to('test@example.com')
                 ->subject('Time for Symfony Mailer!')
                 ->text('Sending emails is fun again!')
