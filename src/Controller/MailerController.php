@@ -15,7 +15,7 @@ class MailerController extends AbstractController
     {
         try {
             $email = (new Email())
-                ->from('enzo@example.com')
+                ->from('enzo30@example.com')
                 ->to('test@example.com')
                 ->subject('Time for Symfony Mailer!')
                 ->text('Sending emails is fun again!')
