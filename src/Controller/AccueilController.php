@@ -27,10 +27,8 @@ class AccueilController extends AbstractController
     #[Route('/accueil', name: 'app_accueil')]
     public function index(): Response
     {
-       //on appelle le repository pour accéder à la fonction
         $artistes = $this->artistRepo->getSomeArtists("Damso");
 
-        //on teste le contenu de la variable $artistes : dd() veut dire Dump and Die
         dd($artistes); 
 
      // ...    
