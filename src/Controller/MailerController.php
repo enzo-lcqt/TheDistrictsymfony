@@ -19,6 +19,7 @@ class MailerController extends AbstractController
     public function sendEmail(MailerInterface $mailer): Response
     {
         try {
+            
             $email = (new TemplatedEmail())
                 ->from('enzolocquet@gmail.com')
                 ->to('test@example.com')
