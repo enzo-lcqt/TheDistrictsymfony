@@ -16,8 +16,7 @@ class ContactFormType extends AbstractType
             ->add('objet')
             ->add('email')
 
-            //On a rajouté un label et on a rendu le champ optionnel en
-            // donnant la valeur false à l'attribut required
+           
             ->add('message', TextareaType::class, [
                 'label' => 'Votre message',
                 'required' => false
