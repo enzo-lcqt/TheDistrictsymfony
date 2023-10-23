@@ -15,6 +15,7 @@ use Symfony\Component\Mime\Part\File;
 
 class MailerController extends AbstractController
 {
+    
     #[Route('/email', name: 'app_mailer')]
     public function sendEmail(MailerInterface $mailer): Response
     {
