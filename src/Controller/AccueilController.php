@@ -7,34 +7,33 @@ use App\Repository\DiscRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
 
 class AccueilController extends AbstractController
 {
-    
+
 
     private $artistRepo;
     private $discRepo;
-    private $em;
 
-    public function __construct(ArtistRepository $artistRepo, DiscRepository $discRepo, EntityManagerInterface $em)
+    public function __construct(ArtistRepository $artistRepo, DiscRepository $discRepo)
     {
         $this->artistRepo = $artistRepo;
         $this->discRepo = $discRepo;
-        $this->em = $em;
 
     }
+
     #[Route('/accueil', name: 'app_accueil')]
     public function index(): Response
     {
-        $artistes = $this->artistRepo->getSomeArtists("Damso");
 
-        dd($artistes); 
 
-     // ...    
+        $artistes = $this->artistRepo->findAll();
+        // dd($artistes);
 
+        return $this->render('accueil/index.html.twig', [
+            'controller_name' => 'AccueilController',
+            'artistes' => $artistes
+        ]);
     }
-
-    
 
 }
