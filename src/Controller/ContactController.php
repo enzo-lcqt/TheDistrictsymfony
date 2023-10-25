@@ -21,21 +21,28 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            //on crée une instance de Contact
+            // Création d'une instance de Contact
             $message = new Contact();
-            // Traitement des données du formulaire
-            //...
-            //persistance des données
+            
+            // Remplissage de l'entité Contact avec les données du formulaire
+            $message->setEmail($form->get('email')->getData());
+            $message->setObjet($form->get('objet')->getData());
+            $message->setMessage($form->get('message')->getData());
 
+            // Persistance des données
             $entityManager->persist($message);
             $entityManager->flush();
 
-            //envoi de mail avec notre service MailService
-            $email = $ms->sendMail('hello@example.com', $message->getEmail(), $message->getObjet(), $message->getMessage() );
+            // Envoi de l'e-mail avec le service MailService
+            $email = $ms->sendMail('hello@example.com', $message->getEmail(), $message->getObjet(), $message->getMessage());
 
+            // Vous pouvez rediriger l'utilisateur vers une page de confirmation
             return $this->redirectToRoute('app_accueil');
         }
-        
+
+        // Si le formulaire n'a pas encore été soumis ou n'est pas valide, afficher le formulaire
+        return $this->render('contact/index.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
