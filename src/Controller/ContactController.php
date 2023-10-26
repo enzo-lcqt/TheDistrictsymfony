@@ -45,6 +45,7 @@ class ContactController extends AbstractController
             $this->entityManager->flush();
 
             // Envoi de l'e-mail avec le service MailService
+            $email = $this->mailService->sendMail('hello@example.com', $message->getEmail(), $message->getObjet(), $message->getMessage());
             
             // Vous pouvez rediriger l'utilisateur vers une page de confirmation
             return $this->redirectToRoute('app_accueil');

@@ -11,6 +11,7 @@ use Symfony\Component\Mime\Email;
 
 class ContactSubscriber implements EventSubscriber
 {
+    
     private $mailer;
 
     public function __construct(MailerInterface $mailer)
@@ -31,10 +32,11 @@ class ContactSubscriber implements EventSubscriber
     {
 //        $args->getObject() nous retourne l'entité concernée par l'événement postPersist
         $entity = $args->getObject();
+        // dd($entity);
 
 //     Vérifier si l'entité est un nouvel objet de type Contact;
 //    Si l'objet persité n'est pas de type Contact, on ne veut pas que le Subscriber se déclenche!
-        if ($entity instanceof \App\Entity\Contact) {
+        if ($entity instanceof Contact) {
 
             $objet = $entity->getObjet();
             $message = $entity->getMessage();
@@ -43,8 +45,8 @@ class ContactSubscriber implements EventSubscriber
             if (preg_match("/rgpd\b/i", $objet) || preg_match("/rgpd\b/i", $message) ) {
                 //     Envoyer un e-mail à l'admin
                 $email = (new Email())
-                    ->from('enzolocquet@gmail.com')
-                    ->to('admin@velvet.com')
+                    ->from('enzo@example.com')
+                    ->to('enzolocquet@gmail.com')
                     ->subject('Alerte RGPD')
                     ->text("Un nouveau message en rapport avec la loi sur les RGPD vous a été envoyé! L'id du message : " .$entity->getId(). " \n Objet du message : " .$entity->getObjet(). " \n Texte du message : " .$entity->getMessage());
 
