@@ -14,8 +14,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ContactController extends AbstractController
 {
+    private $entityManager;
+    private $mailer;
+    private $mailService;
+
+    public function __construct(EntityManagerInterface $entityManager, MailerInterface $mailer, MailService $mailService)
+    {
+        $this->entityManager = $entityManager;
+        $this->mailer = $mailer;
+        $this->mailService = $mailService;
+    }
+
     #[Route('/contact', name: 'app_contact')]
-    public function index(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer, MailService $ms): Response
+    public function index(Request $request): Response
     {
         $form = $this->createForm(ContactFormType::class);
         $form->handleRequest($request);
@@ -30,12 +41,11 @@ class ContactController extends AbstractController
             $message->setMessage($form->get('message')->getData());
 
             // Persistance des données
-            $entityManager->persist($message);
-            $entityManager->flush();
+            $this->entityManager->persist($message);
+            $this->entityManager->flush();
 
             // Envoi de l'e-mail avec le service MailService
-            $email = $ms->sendMail('hello@example.com', $message->getEmail(), $message->getObjet(), $message->getMessage());
-
+            
             // Vous pouvez rediriger l'utilisateur vers une page de confirmation
             return $this->redirectToRoute('app_accueil');
         }
