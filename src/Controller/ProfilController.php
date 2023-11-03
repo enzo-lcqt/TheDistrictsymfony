@@ -12,6 +12,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProfilController extends AbstractController
 {
+
+    
     private $userRepo;
     private $security;
 
@@ -21,7 +23,7 @@ class ProfilController extends AbstractController
         $this->security = $security;
     }
 
-    #[isGranted('ROLE_GERANTRESTO', message: "Nous sommes désolés, vous ne disposez pas des autorisations nécessaires pour accèder à cette page!")]
+    #[IsGranted("ROLE_USER", message: "vous n'avez pas le droit")]
     #[Route('/profil', name: 'app_profil')]
     public function index(): Response
     {
