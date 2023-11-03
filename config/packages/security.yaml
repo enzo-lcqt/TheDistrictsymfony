@@ -31,15 +31,24 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+               # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        # - { path: ^/contact, roles: ROLE_CLIENT }
+         - { path: ^/profil, roles: ROLE_CLIENT }
+
+        
+
 
 when@test:
     security:
+        role_hierarchy:
+            ROLE_CLIENT: ROLE_GERANTRESTO
+            ROLE_ADMIN: [ROLE_CLIENT, ROLE_GESTION]
+
         password_hashers:
             # By default, password hashers are resource intensive and take time. This is
-            # important to generate secure password hashes. In tests however, secure hashes
-            # are not important, waste resources and increase test times. The following
+            # important to generate secure password hashes. In tests, however, secure hashes
+            # are not important, waste resources, and increase test times. The following
             # reduces the work factor to the lowest possible values.
             Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
                 algorithm: auto

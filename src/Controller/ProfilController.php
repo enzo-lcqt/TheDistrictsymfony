@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 
 class ProfilController extends AbstractController
@@ -20,6 +21,7 @@ class ProfilController extends AbstractController
         $this->security = $security;
     }
 
+    #[isGranted('ROLE_GERANTRESTO', message: "Nous sommes désolés, vous ne disposez pas des autorisations nécessaires pour accèder à cette page!")]
     #[Route('/profil', name: 'app_profil')]
     public function index(): Response
     {
